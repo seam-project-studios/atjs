@@ -1,20 +1,22 @@
-# Osiris and OJS
+# Osiris and atjs
 
-## OJS is an asynchronous Javascript template engine [src](https://github.com/seam-project-studios/osiris-ojs/blob/master/ojs.js)
+[![buddy pipeline](https://app.buddy.works/seam-1/atjs/pipelines/pipeline/210651/badge.svg?token=db450f566f6710bfeaf480407be00f285dc56a19e75528b3445443c72028567a "buddy pipeline")](https://app.buddy.works/seam-1/atjs/pipelines/pipeline/210651)
+
+## atjs is an asynchronous JavaScript template engine [src](https://github.com/seam-project-studios/osiris-atjs/blob/master/atjs.js)
 Designed to build static sites or be used with express using simple template syntax that supports native JS within templates. Written from the ground up to achieve full [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) abilities.
 
-OJS provides a `print` function and it must be called with `await` as the writableStream may have closed or be buffering. This allows for low memory and cpu usage and high throughput from a single thread.
+atjs provides a `print` function and it must be called with `await` as the writableStream may have closed or be buffering. This allows for low memory and cpu usage and high throughput from a single thread.
 
 ## Installation
-`npm i --save osiris-ojs`
+`npm i --save atjs`
 
-## OJS Template syntax:
+## atjs Template syntax:
 ```javascript
 <?
 // we start our javascript content with <? and end it with ?>
 // we can use <?='hi' ?> to print any statement, this will automatically be awaited
 
-let myWelcome = 'Hi from Javascript!';
+let myWelcome = 'Hi from JavaScript!';
 
 // anything javascript goes, here's a test function
 const myFunction = async () => { // async lets us await
@@ -37,7 +39,7 @@ await myFunction(); // we can await our own functions too
 </html>
 ```
 
-## Osiris is a framework built on top of OJS [src](https://github.com/seam-project-studios/osiris-ojs/blob/master/osiris.js)
+## Osiris is a framework built on top of atjs [src](https://github.com/seam-project-studios/osiris-atjs/blob/master/osiris.js)
 Designed to facility code re-use and organisation of files, Osiris and its modules are all built with asynchronicity in mind to allows IO requests to not bottleneck the system.
 
 Files are organised into your projects `./src/` with the following folders:
@@ -46,14 +48,14 @@ Files are organised into your projects `./src/` with the following folders:
 - osiris.templateMap folders resolve here, defaults are `snippets/` and `elements/`
 
 Please check out our examples:
-- [Using express](https://github.com/seam-project-studios/osiris-ojs/blob/master/dev.js)
-- [Using a build script](https://github.com/seam-project-studios/osiris-ojs/blob/master/build.js)
-- [Build and host static with express](https://github.com/seam-project-studios/osiris-ojs/blob/master/static.js)
+- [Using express](https://github.com/seam-project-studios/osiris-atjs/blob/master/dev.js)
+- [Using a build script](https://github.com/seam-project-studios/osiris-atjs/blob/master/build.js)
+- [Build and host static with express](https://github.com/seam-project-studios/osiris-atjs/blob/master/static.js)
 
 ## Osiris build example
 ```javascript
 const fs = require('fs');
-const osiris = require('osiris-ojs');
+const osiris = require('osiris-atjs');
 osiris.mode = 'development'; // or 'production'
 osiris.templateMap = { // default settings, included for completeness
   snippet: 'snippets',
@@ -68,7 +70,7 @@ osiris.use({
 });
 
 let writeFile = fs.createWriteStream('myBuilt.html'); // open a file to put the result in
-await osiris.render(writeFile, 'myToBuild.ojs', {
+await osiris.render(writeFile, 'myToBuild.atjs', {
   myLocalFunction: async () => { // we can inject things just for this rendering
     await this.print('Hi from myLocalFunction');
   }
@@ -77,29 +79,29 @@ await osiris.render(writeFile, 'myToBuild.ojs', {
 
 ---
 
-## Osiris API [src](https://github.com/seam-project-studios/osiris-ojs/blob/master/osiris.js)
+## Osiris API [src](https://github.com/seam-project-studios/osiris-atjs/blob/master/osiris.js)
 Osiris features the following configuration via the osiris object
-- `mode = 'development' or 'production'`, default development, development disables ojs caching and directs errors to the web browser.
-- `qMap = Object`, character mapping to html entities, used by `q()`, [default](https://github.com/seam-project-studios/osiris-ojs/blob/master/osiris.js#L6) translates <, >, ', " and &
-- `templateMap = Object`, key/value pairs, key represent the name of the function added to the template scope and the value represents the path within `./src/` [default](https://github.com/seam-project-studios/osiris-ojs/blob/master/osiris.js#L15)
+- `mode = 'development' or 'production'`, default development, development disables atjs caching and directs errors to the web browser.
+- `qMap = Object`, character mapping to html entities, used by `q()`, [default](https://github.com/seam-project-studios/osiris-atjs/blob/master/osiris.js#L6) translates <, >, ', " and &
+- `templateMap = Object`, key/value pairs, key represent the name of the function added to the template scope and the value represents the path within `./src/` [default](https://github.com/seam-project-studios/osiris-atjs/blob/master/osiris.js#L15)
 
-Osiris exposes the following functions to the templates, as well as the default `print()` provided by OJS
+Osiris exposes the following functions to the templates, as well as the default `print()` provided by atjs
 - `q: async? (str='')`, translates a strings HTML entities with `qMap` so it can be used within quoted attributes, returns a promise if given a promise
-- `js: (str)`, bundles collections of Javascript for footer insertion
+- `js: (str)`, bundles collections of JavaScript for footer insertion
 - `css: (str)`, bundles collections of CSS for footer insertion
 - `bundleJs`, retrieves the JS bundle for output
 - `bundleCss`, retrieves the CSS bundle for output
-- `locals`, a persistant object that allows for a global namespace between template calls
-- `onClose = function`, bind a function to this hook to be called when the connection is lost mid-template.  Also available in OJS
-- `onError = function (errorText)`, bind a function to handle errors.  Also available in OJS, [default](https://github.com/seam-project-studios/osiris-ojs/blob/master/osiris.js#L88)
+- `locals`, a persistent object that allows for a global namespace between template calls
+- `onClose = function`, bind a function to this hook to be called when the connection is lost mid-template.  Also available in atjs
+- `onError = function (errorText)`, bind a function to handle errors.  Also available in atjs, [default](https://github.com/seam-project-studios/osiris-atjs/blob/master/osiris.js#L88)
 ---
 
-## Osiris express [src](https://github.com/seam-project-studios/osiris-ojs/blob/master/express.js)
+## Osiris express [src](https://github.com/seam-project-studios/osiris-atjs/blob/master/express.js)
 Osiris comes with hooks to get functionality within express, usage:
 ```javascript
 const HTTP_PORT = 8080;
-const osiris = require('osiris-ojs');
-const ojsExpress = require('osiris-ojs/express');
+const osiris = require('osiris-atjs');
+const atjsExpress = require('osiris-atjs/express');
 const express = require('express');
 const app = express();
 const fs = require('mz/fs'); // modernizer fs uses promises instead of callbacks
@@ -112,7 +114,7 @@ const main = async () => {
       filename = 'index'; // default page for directory index
     }
 
-    if (!await fs.exists('./src/pages/' + filename + '.ojs')) {
+    if (!await fs.exists('./src/pages/' + filename + '.atjs')) {
       return next(); // file doesn't exist, bail
     }
 
@@ -121,9 +123,9 @@ const main = async () => {
     // call renderer with our addons, we can block here with await if we need any clean up after render
     await osiris.render(
       res, // our writableStream
-      './src/pages/' + filename + '.ojs', // our template file
-      ojsExpress(req, res), // this gives templates access to get, post, header() and headersSent, cookie and setCookie()
-      express: ojsExpress(req, res) // we can also do this if we want to put all of that in scope of an express object instead of top level
+      './src/pages/' + filename + '.atjs', // our template file
+      atjsExpress(req, res), // this gives templates access to get, post, header() and headersSent, cookie and setCookie()
+      express: atjsExpress(req, res) // we can also do this if we want to put all of that in scope of an express object instead of top level
     });
     // render complete, res.end() sent, perform any required clean up
   });
@@ -133,7 +135,7 @@ const main = async () => {
 
 main();
 ```
-## Osiris express template API [src](https://github.com/seam-project-studios/osiris-ojs/blob/master/express.js)
+## Osiris express template API [src](https://github.com/seam-project-studios/osiris-atjs/blob/master/express.js)
 - `get`, object containing get variables, parsed by `url.parse`
 - `post`, object containing post variables, taken from `req.body`
 - `header: (...args)`, calls `res.set`
@@ -144,22 +146,22 @@ main();
 
 ---
 
-## Osiris i18n [src](https://github.com/seam-project-studios/osiris-ojs/blob/master/i18n.js)
+## Osiris i18n [src](https://github.com/seam-project-studios/osiris-atjs/blob/master/i18n.js)
 Designed to facilitate internationalisation of HTML templates.  It does this by JIT searching the src/locales/ folder for folders for each locale, then searches within those for translations
 
 Example as before but with:
 ```javascript
-const ojsi18n = await require('osiris-ojs/i18n')(); // searches for locales and exposes nodeJS API
+const atjsi18n = await require('osiris-atjs/i18n')(); // searches for locales and exposes nodeJS API
 
 await osiris.render(writeFile, file, {
-  i18n: ojsi18n.locale(locale), // locale being the viewers current locale, exposes: t(), d(), n(), locale, locales, setLocale()
+  i18n: atjsi18n.locale(locale), // locale being the viewers current locale, exposes: t(), d(), n(), locale, locales, setLocale()
 });
 ```
 
 More complete examples:
-- [Using express](https://github.com/seam-project-studios/osiris-ojs/blob/master/dev.js)
-- [Using a build script](https://github.com/seam-project-studios/osiris-ojs/blob/master/build.js)
-- [Build and host static with express](https://github.com/seam-project-studios/osiris-ojs/blob/master/static.js)
+- [Using express](https://github.com/seam-project-studios/osiris-atjs/blob/master/dev.js)
+- [Using a build script](https://github.com/seam-project-studios/osiris-atjs/blob/master/build.js)
+- [Build and host static with express](https://github.com/seam-project-studios/osiris-atjs/blob/master/static.js)
 
 ## Osiris i18n nodeJS API
 - `locales`, array of strings of locales available
@@ -173,3 +175,5 @@ More complete examples:
 - `t: async (namespaceString)`, splits the namespaceString by "." and recurses down src/locales/`locale`/ folders/JSON structures (JS and JSON files supported) until a valid key is found.  If a function is found it is called (async), returns "[locale.`locale`.`namespaceString`]" on failure
 - `d: (dateObject, options?)`, localize datetime according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
 - `n: (numberObject, options?)`, localize number according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
+
+[<figure><img src="https://buddy.works" /><figcaption>Automated by Buddy](https://assets.buddy.works/automated-white.svg)</figcaption></figure>

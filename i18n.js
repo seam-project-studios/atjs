@@ -42,7 +42,7 @@ const addNode = (data, path, ext) => {
 const loadLocales = () => {
   return new Promise(async (res, rej) => {
     if (await fs.exists(localesFolder) === false) {
-      throw new Error('ojs.i18n could not find locales folder at ' + localesFolder);
+      throw new Error('atjs.i18n could not find locales folder at ' + localesFolder);
     }
 
     let data = {}
@@ -75,7 +75,7 @@ const traverseObj = async (obj, path) => {
   return await Promise.resolve(ref);
 };
 
-const OjsI18n = function(data, localeString) {
+const AtjsI18n = function(data, localeString) {
   // setLocale, pretty straight forward
   let locale;
   this.setLocale = (localeString) => {
@@ -129,6 +129,6 @@ module.exports = async () => {
       );
     },
     locales: Object.keys(data),
-    locale: (localeString) => new OjsI18n(data, localeString)
+    locale: (localeString) => new AtjsI18n(data, localeString)
   };
 };

@@ -1,0 +1,9 @@
+<?=snippet('header', {title: 'elements examples'}) ?>
+
+<h2>Simple form elements</h2>
+<form method="post" action="?">
+  <?=element('input', {type: 'text', label: '<strong>Label 1</strong>', name: 'input1name', id: 'input1id', value: '">destruction attempt'}) ?><br/>
+  <?=element('input', {type: 'text', label: 'Label 2', name: 'input2name', id: 'input2id', title: '"automatically quoted"'}) ?><br/>
+</form>
+
+<?=snippet('footer') ?>

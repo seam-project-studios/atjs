@@ -2,7 +2,5 @@ build/
 node_modules/
 npm-error.log
 yarn-error.log
-_book/
 component/
 template/
-book.js
