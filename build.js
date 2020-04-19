@@ -118,7 +118,7 @@ module.exports = main;
 
 if (require.main === module) {
   // run directly
-  main();
+  main('en-GB');
 
   process.on('unhandledRejection', error => {
     console.log('unhandledRejection', error);
