@@ -30,8 +30,9 @@ const main = async (port) => {
   const atjsi18n = await require('./i18n')();
   atjsi18n.watch(); // watch localeFolder for changes
 
-  app.use(express.static('src/pages/')); // serve pages folder
+  app.use(express.static('./src/pages/')); // serve pages folder
 
+  app.use('/assets', express.static('./build/assets'));
   // expose a global link function for i18n support
   osiris.use({
     link: (path) => path, // this is more for linking between built pages than express
@@ -54,19 +55,18 @@ const main = async (port) => {
 
   app.use(async (req, res, next) => { // anything not served lands here
     let filename = req.path.substr(1); // trim starting /
-
     if (filename === '') {
       filename = 'index'; // default page for directory index
     }
 
-    if (!await fs.exists('./src/pages/' + filename + '.atjs')) {
+    if (!await fs.exists('./src/pages/' + filename + '.html' + '.atjs')) {
       return next(); // file doesn't exist, bail
     }
 
     res.header('content-type', 'text/html'); // we have something
 
     // call renderer with our addons, we can block here with await if we need any clean up after render
-    await osiris.render(res, './src/pages/' + filename + '.atjs', {
+    await osiris.render(res, './src/pages/' + filename + '.html' + '.atjs', {
       express: atjsExpress(req, res), // this gives templates access to get, post, header() and headersSent
       i18n: atjsi18n.locale(req.locale), // localization, assume en-GB for now; exposed: t(), d(), n(), locales, setLocale()
       customFunc: () => 'customAnswer', // anything else we could possibly want, async/promises supported
