@@ -25,7 +25,7 @@ const recurseFs = async (root, file, beforeFolder, afterFolder) => {
   }
 };
 
-const main = async () => {
+const main = async (defaultLocale) => {
   const osiris = require('./osiris'); // renderer
   const atjsi18n = await require('./i18n')();
 
@@ -57,6 +57,9 @@ const main = async () => {
     if (doti !== -1) {
       name = path.substr(0,doti);
       ext = path.substr(doti+1);
+    }
+    if (locale === defaultLocale && name === 'index') {
+      return name + (ext ? '.' + ext : '');
     }
     return name + '-' + locale + (ext ? '.' + ext : '');
   };
