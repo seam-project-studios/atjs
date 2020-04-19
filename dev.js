@@ -1,6 +1,11 @@
-const HTTP_PORT = process.env.HTTP_PORT || 4682;
+let HTTP_PORT = process.env.HTTP_PORT || 4682;
 
-const main = async () => {
+const main = async (port) => {
+  // if port ()
+  if (port) {
+    HTTP_PORT = port
+  }
+
   // general purpose
   const fs = require('mz/fs'); // modernizer fs uses promises instead of callbacks
 
@@ -81,4 +86,4 @@ process.on('unhandledRejection', error => {
   console.log('unhandledRejection', error);
 });
 
-main();
+module.exports = main;
