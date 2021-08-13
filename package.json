@@ -23,7 +23,7 @@
     "syntax-error": "^1.4.0",
     "nodemon": "^1.17.5",
     "extend": "^3.0.2",
-    "acorn": "^6.0.0"
+    "acorn": "^6.4.2"
   },
   "engines": {
     "node": ">=10.15.1",
