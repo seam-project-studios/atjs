@@ -1,7 +1,5 @@
 # Osiris and atjs
 
-[![buddy pipeline](https://app.buddy.works/seam-1/atjs/pipelines/pipeline/210651/badge.svg?token=db450f566f6710bfeaf480407be00f285dc56a19e75528b3445443c72028567a "buddy pipeline")](https://app.buddy.works/seam-1/atjs/pipelines/pipeline/210651)
-
 ## atjs is an asynchronous JavaScript template engine [src](https://github.com/seam-project-studios/atjs/blob/master/atjs.js)
 Designed to build static sites or be used with express using simple template syntax that supports native JS within templates. Written from the ground up to achieve full [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) abilities.
 
