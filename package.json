@@ -1,9 +1,9 @@
 {
   "name": "atjs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "SEAM PROJECT STUDIOS S,L",
   "license": "ISC",
-  "main": "index.js",
+  "main": "atjs.js",
   "description": "",
   "scripts": {
     "dev": "nodemon dev.js --ignore src",
